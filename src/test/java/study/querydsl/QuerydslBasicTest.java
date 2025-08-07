@@ -692,4 +692,60 @@ public class QuerydslBasicTest {
     private BooleanExpression allEq(String usernameCond, Integer ageCond) {
         return usernameEq(usernameCond).and(ageEq(ageCond));
     }
+
+    // 수정, 삭제 벌크 연산
+    /**
+     * 영속성 컨텍스트가 우선권을 가지기 때문에 update를 execute해도 실행 중인 애플리케이션의 영속성 컨텍스트의 값은 변경되지 않는다.
+     * -> flush(), clear() 사용
+     * bulk 연산 실행 후에는 영속성 컨텍스트를 초기화 해주는 것이 좋다.
+     */
+    @Test
+    public void bulkUpdate() {
+
+        //member1 = 10 -> 비회원
+        //member2 = 20 -> 비회원
+        //member3 = 30 -> 유지
+        //member4 = 40 -> 유지
+
+        long count = queryFactory
+                .update(member)
+                .set(member.username, "비회원")
+                .where(member.age.lt(28))
+                .execute();
+
+        em.flush();
+        em.clear();
+
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .fetch();
+
+        for (Member member1 : result) {
+            System.out.println("member1 = " + member1);
+        }
+    }
+
+    @Test
+    public void bulkAdd() {
+        long count = queryFactory
+                .update(member)
+                .set(member.age, member.age.add(1))
+                .execute();
+    }
+
+    @Test
+    public void bulkMultiply() {
+        long count = queryFactory
+                .update(member)
+                .set(member.age, member.age.multiply(2))
+                .execute();
+    }
+
+    @Test
+    public void bulkDelete() {
+        long count = queryFactory
+                .delete(member)
+                .where(member.age.gt(18))
+                .execute();
+    }
 }
