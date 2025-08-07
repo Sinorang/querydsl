@@ -217,6 +217,7 @@ public class QuerydslBasicTest {
 
     /**
      * 팀의 이름과 각 팀의 평균 연령을 구해라.
+     *
      * @throws Exception
      */
     @Test
@@ -516,6 +517,7 @@ public class QuerydslBasicTest {
     }
 
     // 프로젝션과 결과 반환 - DTO 조회
+
     /**
      * 순수 JPA에서 DTO를 조회할 때는 new 명령어를 사용해야 함
      * DTO의 package 이름을 다 적어줘야 해서 지저분함
@@ -615,6 +617,7 @@ public class QuerydslBasicTest {
     }
 
     // 프로젝션과 결과 반환 - @QueryProjection
+
     /**
      * 생성자와 유사한 방식이지만
      * 런타임이 아닌 컴파일 시점에 에러를 잡을 수 있다
@@ -659,6 +662,7 @@ public class QuerydslBasicTest {
     }
 
     // 동적 쿼리 - Where 다중 파라미터 사용
+
     /**
      * 메서드를 다른 쿼리에 재활용 할 수 있다.
      * 쿼리 자체의 가독성이 높아진다.
@@ -694,6 +698,7 @@ public class QuerydslBasicTest {
     }
 
     // 수정, 삭제 벌크 연산
+
     /**
      * 영속성 컨텍스트가 우선권을 가지기 때문에 update를 execute해도 실행 중인 애플리케이션의 영속성 컨텍스트의 값은 변경되지 않는다.
      * -> flush(), clear() 사용
